@@ -1,0 +1,151 @@
+    body {
+        font-weight: 300;
+        font-size: 12px;
+        line-height: 30px;
+        font-family: "Open Sans", Helvetica, Arial, sans-serif;
+        background-image: url(../images/Principal2.jpg);
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-attachment: fixed;
+    }
+    
+    .btn {
+        height: 80px
+    }
+    
+    .Buscador {
+        position: fixed;
+        left: 296px;
+    }
+    
+    .Buscador img {
+        position: relative;
+        left: 153px;
+    }
+    
+    .Buscador img:hover {
+        width: 50px;
+    }
+    
+    .Buscador h3 {
+        position: relative;
+        font-family: unset;
+        color: #000;
+        font-weight: 900;
+        left: 60px;
+        top: 100px;
+    }
+    
+    .Buscador input {
+        position: relative;
+        left: 227px;
+        width: 130px;
+        height: 35px;
+        text-align: center;
+        top: 52px;
+    }
+    
+    #btn_buscador {
+        text-decoration: none;
+        position: fixed;
+        left: 51%;
+        top: 110px;
+    }
+    
+    #btn_buscador:hover {
+        width: 1px, 1px, 1px, 1px;
+        transition: all 400ms
+    }
+    
+    .opciones menu {
+        border-bottom: solid;
+    }
+    
+    .font {
+        position: relative;
+        width: 20px;
+        height: 0px;
+        left: 100px;
+        bottom: 65px;
+    }
+    
+    .grilla {
+        position: fixed;
+        left: 310px;
+        border: solid;
+        width: 720px;
+        height: 390px;
+        top: 179px;
+        background: rgb(216, 215, 215);
+    }
+    
+    .GrillaView {
+        display: block;
+        border: solid;
+        border-color: black;
+        padding: 10px;
+        margin: 10px;
+    }
+    /* MENU PRINCIPAL */
+    
+    nav {
+        position: absolute;
+        left: 30px;
+        top: 10px;
+        background: #e74c3c;
+        border: solid;
+    }
+    
+    #proveedores {
+        left: 15px;
+    }
+    
+    #usuario {
+        left: 1px;
+    }
+    
+    * {
+        box-sizing: border-box;
+        padding: 0px;
+    }
+    
+    li {
+        list-style-type: none;
+        position: relative;
+        text-align: center;
+        width: 223px;
+        font-weight: bolder;
+    }
+    
+    li a {
+        text-decoration: none;
+        font-weight: 900;
+        bottom: 18px;
+        text-align: center;
+        position: relative;
+        display: inline-block;
+        width: 127px;
+        left: 8px;
+        color: #fff;
+        border: solid;
+        border-color: black;
+        border-radius: 90px;
+    }
+    
+    li a:hover {
+        color: #000;
+        background-color: rgb(15, 133, 11);
+        transition-duration: 0.5s;
+    }
+    
+    nav li ul {
+        display: none;
+        top: 0px;
+        background: #e74c3c;
+    }
+    
+    nav li:hover ul {
+        transition-duration: 1s;
+        display: block;
+    }

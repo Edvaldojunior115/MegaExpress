@@ -38,9 +38,9 @@ const ClientesGet = (req = request, res = response) => {
 
 const ClienteGet = (req = request, res = response) => {
 
-    const IdCliente = req.query.IdCliente;
+    const { DNI } = req.body;
 
-    const SELECT = `SELECT * FROM Cliente where Statuscli = 1 AND IdCliente = ${IdCliente}`;
+    const SELECT = `SELECT * FROM Cliente where Statuscli = 1 AND IdCliente = ${DNI}`;
 
 
     pool.query(SELECT, (err, result) => {
@@ -63,7 +63,7 @@ const ClienteGet = (req = request, res = response) => {
 
         res.json({
             ok: true,
-            message: 'CLIENTES REGISTRADOS:',
+            message: 'CLIENTE REGISTRADO CON EL LEGAJO ESPECÍFICADO:',
             result
         });
 
@@ -115,11 +115,11 @@ const ClientePut = (req, res = response) => {
 
     const { id, Nombre, Apellido, DNI, Domicilio, Localidad, Email, Fecha, Telefono, Cuit, CTACTE } = req.body;
 
-    if (id == '' || id == undefined) {
+    if (DNI == '' || DNI == undefined) {
 
         return res.json({
             ok: false,
-            message: 'ES NECESARIO ESPECIFICAR EL ID DEL CLIENTE A ACTUALIZAR.'
+            message: 'ES NECESARIO ESPECIFICAR EL DNI DEL CLIENTE A ACTUALIZAR.'
         });
     }
 
@@ -134,7 +134,7 @@ const ClientePut = (req, res = response) => {
             FechaCli= "${Fecha}",
             TelefonoCli= "${Telefono}",
             CuitCli= "${Cuit}",
-            CTACTECli= "${CTACTE}" WHERE IdCliente = ${id} AND StatusCli = 1`;
+            CTACTECli= "${CTACTE}" WHERE DNI = ${DNI} AND StatusCli = 1`;
 
     pool.query(UPDATE, (err, result) => {
 
@@ -162,17 +162,17 @@ const ClientePut = (req, res = response) => {
 //** Método para la eliminación de un cliente de la base de datos.
 const ClienteDelete = (req, res = response) => {
 
-    const IdCliente = req.query.IdCliente;
+    const { DNI } = req.body;
 
-    if (!IdCliente) {
+    if (!DNI) {
 
         return res.json({
             ok: false,
-            message: 'NO HAS ESPECIFICADO EL USUARIO A SER ELIMINADO.'
+            message: 'NO HAS ESPECIFICADO EL DNI DEL USUARIO A SER ELIMINADO.'
         });
     }
 
-    const DELETE = `UPDATE cliente SET StatusCli = 0 where IdCliente =${IdCliente}`
+    const DELETE = `UPDATE cliente SET StatusCli = 0 where DNI =${DNI}`
 
     pool.query(DELETE, (err, result) => {
 
@@ -202,11 +202,55 @@ const ClienteDelete = (req, res = response) => {
 }
 
 
+//** Método para la ACTIVAR NUEVAMENTE UN USUARIO QUE HA SIDO ELIMINADO.
+const ActivarCliente = (req, res = response) => {
+
+    const { DNI } = req.body;
+
+    if (!DNI) {
+
+        return res.json({
+            ok: false,
+            message: 'NO HAS ESPECIFICADO EL DNI DEL USUARIO A SER ELIMINADO.'
+        });
+    }
+
+    const DELETE = `UPDATE cliente SET StatusCli = 0 where DNI  =${DNI}`
+
+    pool.query(DELETE, (err, result) => {
+
+        if (err) {
+            return res.json({
+                ok: false,
+                message: 'ERROR AL REACTIVAR EL CLIENTE EN BASE DE DATOS.',
+                err
+            });
+        }
+
+        if (result.length == 0) {
+            return res.json({
+                ok: false,
+                message: 'EL CLIENTE NO HA SIDO REACTIVADO.'
+            });
+        }
+
+
+
+        return res.json({
+            message: 'CLIENTE HA SIDO REACTIVADO CON ÉXITO.',
+            ID: IdCliente
+        });
+
+    });
+}
+
+
 
 module.exports = {
     ClientesGet,
     ClienteGet,
     ClientePost,
     ClientePut,
-    ClienteDelete
+    ClienteDelete,
+    ActivarCliente
 }

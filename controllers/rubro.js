@@ -41,9 +41,9 @@ const RubrosGet = (req = request, res = response) => {
 
 const RubroGet = (req = request, res = response) => {
 
-    const IdRubro = req.query.IdCliente;
+    const NombreRubro = req.body;
 
-    const SELECT = `SELECT * FROM rubro where IdRubro = ${IdRubro}`;
+    const SELECT = `SELECT * FROM rubro where NombreRubro = ${NombreRubro}`;
 
     pool.query(SELECT, (err, result) => {
 
@@ -74,13 +74,12 @@ const RubroGet = (req = request, res = response) => {
 }
 
 
-
 //Método para crear un cliente en la base de datos.
 const RubroPost = (req, res = response) => {
 
-    const { NombreRubro, DescripcionRubro } = req.body;
+    const { NombreRubro, Descripcion } = req.body;
 
-    const INSERT = `INSERT INTO rubro (IdRubro, NombreRubro, DescripcionRubro) VALUES (NULL, "${NombreRubro}", "${DescripcionRubro}");`;
+    const INSERT = `INSERT INTO rubro (IdRubro, NombreRubro, DescripcionRubro) VALUES (NULL, "${NombreRubro}", "${Descripcion}");`;
 
     pool.query(INSERT, (err, result) => {
 
@@ -114,7 +113,7 @@ const RubroPost = (req, res = response) => {
 
 const RubroPut = (req, res = response) => {
 
-    const { id, nombreRubro, descripcionRubro } = req.body;
+    const { id, NombreRubro, Descripcion } = req.body;
 
     if (id == '' || id == undefined) {
 
@@ -125,10 +124,7 @@ const RubroPut = (req, res = response) => {
     }
 
 
-    const UPDATE = `UPDATE rubro SET
-
-    NombreRubro= "${nombreRubro}",
-    DescripcionRubro= "${descripcionRubro}" WHERE IdCliente = ${id}`;
+    const UPDATE = `UPDATE rubro SET NombreRubro= "${NombreRubro}", DescripcionRubro= "${Descripcion}" WHERE idRubro = ${id}`;
 
     pool.query(UPDATE, (err, result) => {
 
@@ -147,7 +143,8 @@ const RubroPut = (req, res = response) => {
             });
         }
 
-        res.json({
+        return res.json({
+            ok: true,
             message: 'RUBRO ACTUALIZADO CON ÉXITO.'
         });
     });
@@ -156,7 +153,7 @@ const RubroPut = (req, res = response) => {
 //** Método para la eliminación de un cliente de la base de datos.
 const RubroDelete = (req, res = response) => {
 
-    const IdRubro = req.query.IdCliente;
+    const IdRubro = req.body;
 
     if (!IdRubro) {
 

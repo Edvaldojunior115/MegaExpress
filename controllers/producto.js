@@ -89,7 +89,7 @@ const ProductoPost = (req, res = response) => {
         if (err) {
             return res.json({
                 ok: false,
-                message: 'ERROR AL INSERTAR PROVEEDOR EN BASE DE DATOS.',
+                message: 'ERROR AL INSERTAR PRODUCTO EN BASE DE DATOS.',
                 err
             });
         }

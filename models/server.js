@@ -8,10 +8,8 @@ class Server {
         this.app = express();
         this.port = process.env.PORT;
         this.usuariosPath = '/api/usuarios';
-
         // Middlewares
         this.middlewares();
-
         // Rutas de mi aplicación
         this.routes();
     }

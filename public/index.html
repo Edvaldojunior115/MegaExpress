@@ -8,6 +8,7 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 
@@ -36,25 +37,31 @@
                     <h2>Iniciar Sesión</h2>
                     <input name="legajo" type="text" placeholder="Legajo">
                     <input name="contrasena" type="password" placeholder="Contraseña">
-                    <button type="submit">Entrar</button>
+                    <button id="btnLogin" type="submit">Entrar</button>
+
                 </form>
 
                 <!--Register-->
-                <form action="" class="formulario__register">
+                <form id="registrarLogin" class="formulario__register">
                     <h2>Regístrarse</h2>
-                    <input type="text" placeholder="Nombre completo">
-                    <input type="text" placeholder="E-mail">
-                    <input type="password" placeholder="Contraseña">
-                    <button><a href="#">Regístrarse</button></a>
+                    <input name="Legajo" type="text" placeholder="Legajo">
+                    <input name="Contrasena" type="password" placeholder="Contrasena">
+                    <input name="Email" type="text" placeholder="Email">
+                    <input name="Rol" type="text" placeholder="Rol">
+
+                    <button id="btnRegistra" type="submit"></button>
                 </form>
             </div>
+
         </div>
 
     </main>
 
+
     <script src="assets/js/script.js"></script>
     <script src="assets/js/scriptLogin.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 
 </body>
 

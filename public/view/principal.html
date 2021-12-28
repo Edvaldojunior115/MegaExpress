@@ -2,7 +2,7 @@
 <html lang="es">
 
 <head>
-    <link rel="stylesheet" href="../assets/css/formstyles.css">
+    <link rel="stylesheet" href="../assets/css/PrincipalStyles.css">
 
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -15,28 +15,27 @@
 
 <body>
 
-    <div id="user">
+    <!-- <div id="user">
         <h4>Usuario: Admin</h4>
         <h4>Rol: Admin</h4>
-    </div>
+    </div> -->
 
     <div class="Buscador">
         <h3>Consultar producto:</h3>
-        <input placeholder="Código" type="text" tabindex="1">
+        <input placeholder="Código Producto" type="text" tabindex="1">
     </div>
 
 
-    <div id="btn_buscador">
-        <a href="#"> <img src="../assets/iconos/Buscador.png"></img>
-        </a>
-    </div>
+    <a href="#" id="btn_buscador"> <img src="../assets/iconos/Buscador.png"></img>
+    </a>
+
 
 
     <nav>
         <ul>
             <li>
                 <img src="../assets/iconos/usuario.png">
-                <a href="./cliente.html">Usuario</img></a>
+                <a id="usuario" href="./cliente.html">Usuario</img></a>
             </li>
 
             <li>
@@ -51,7 +50,7 @@
 
             <li>
                 <img src="../assets/iconos/Vendedores.png">
-                <a href="#">Proveedores</a>
+                <a id="proveedores" href="./proveedor.html">Proveedores</a>
             </li>
             <li>
                 <img src="../assets/iconos/Estadisticas.png">
@@ -66,7 +65,7 @@
 
                     <li>
                         <img src="../assets/iconos/stock.png">
-                        <a href="#">Stock</a>
+                        <a href="./stock.html">Stock</a>
                     </li>
 
                     <li>

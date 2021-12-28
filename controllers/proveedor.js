@@ -17,7 +17,7 @@ const ProveedoresGet = (req = request, res = response) => {
             res.json({
 
                 ok: false,
-                message: 'ERROR AL INTENTAR MOSTRAR LOS PROVEEDOR',
+                message: 'ERROR AL INTENTAR MOSTRAR LOS PROVEEDORES',
                 err
             });
         }
@@ -25,13 +25,13 @@ const ProveedoresGet = (req = request, res = response) => {
         if (result.length == 0) {
             return res.json({
                 ok: false,
-                message: 'BASE DE DATOS VACÍA'
+                message: 'NO EXISTE NINGÚN PROVEEDOR REGISTRADO'
             });
         }
 
         res.json({
             ok: true,
-            message: 'PROVEEDOR REGISTRADOS:',
+            message: 'PROVEEDORES REGISTRADOS:',
             result
         });
 
@@ -41,9 +41,9 @@ const ProveedoresGet = (req = request, res = response) => {
 
 const ProveedorGet = (req = request, res = response) => {
 
-    const IdCliente = req.query.IdCliente;
+    const IdProveedor = req.body;
 
-    const SELECT = `SELECT * FROM proveedor where Statuscli = 1 AND IdCliente = ${IdCliente}`;
+    const SELECT = `SELECT * FROM proveedor where IdProveedor = ${IdProveedor}`;
 
 
     pool.query(SELECT, (err, result) => {
@@ -52,7 +52,7 @@ const ProveedorGet = (req = request, res = response) => {
             res.json({
 
                 ok: false,
-                message: 'ERROR AL INTENTAR MOSTRAR LOS PROVEEDOR',
+                message: 'ERROR AL INTENTAR AL CONSULTAR POR EL PROVEEDOR',
                 err
             });
         }
@@ -66,7 +66,7 @@ const ProveedorGet = (req = request, res = response) => {
 
         res.json({
             ok: true,
-            message: 'PROVEEDOR REGISTRADOS:',
+            message: 'PROVEEDOR REGISTRADO:',
             result
         });
 
@@ -76,20 +76,27 @@ const ProveedorGet = (req = request, res = response) => {
 
 
 
-//Método para crear un cliente en la base de datos.
+//Método para crear un PROVEEDOR en la base de datos.
 const ProveedorPost = (req, res = response) => {
 
-    const { Nombre, Apellido, DNI, Domicilio, Localidad, Email, Fecha, Telefono, Cuit, CTACTE } = req.body;
+    const {
+        NombreProveedor,
+        VendedorProveedor,
+        ResponsableInscripto,
+        EmailProveedor,
+        LocalidadProveedor,
+        DireccionProveedor
+    } = req.body;
 
-    const INSERT = `INSERT INTO proveedor (IdCliente, NombreCli, ApellidoCli, DNICli, DomicilioCli, LocalidadCli, EmailCli, FechaCli, TelefonoCli, CuitCli, CTACTECli, StatusCli)
-    VALUES (NULL, "${Nombre}", "${Apellido}", "${DNI}", "${Domicilio}", "${Localidad}", "${Email}", "${Fecha}", "${Telefono}", "${Cuit}", "${CTACTE}", "1");`;
+    const INSERT = `INSERT INTO proveedor (IdProveedor, NombreProveedor, VendedorProveedor, ResponsableInscripto, EmailProveedor, LocalidadProveedor, DireccionProveedor)
+    VALUES (NULL, "${NombreProveedor}", "${VendedorProveedor}", "${ResponsableInscripto}", "${EmailProveedor}", "${LocalidadProveedor}", "${DireccionProveedor}");`;
 
     pool.query(INSERT, (err, result) => {
 
         if (err) {
             return res.json({
                 ok: false,
-                message: 'ERROR AL INSERTAR PROVEEDOR EN BASE DE DATOS.',
+                message: 'ERROR AL INSERTAR PROVEEDOR: ',
                 err
             });
         }
@@ -116,9 +123,18 @@ const ProveedorPost = (req, res = response) => {
 
 const ProveedorPut = (req, res = response) => {
 
-    const { id, Nombre, Apellido, DNI, Domicilio, Localidad, Email, Fecha, Telefono, Cuit, CTACTE } = req.body;
+    //Capturamos los datos que viene en el cuerpo y asignamos a cada una de las variables.
+    const {
+        IdProveedor,
+        NombreProveedor,
+        VendedorProveedor,
+        ResponsableInscripto,
+        EmailProveedor,
+        LocalidadProveedor,
+        DireccionProveedor
+    } = req.body;
 
-    if (id == '' || id == undefined) {
+    if (IdProveedor == '' || IdProveedor == undefined) {
 
         return res.json({
             ok: false,
@@ -127,17 +143,21 @@ const ProveedorPut = (req, res = response) => {
     }
 
 
-    const UPDATE = `UPDATE proveedor SET 
+    const UPDATE = `UPDATE proveedor SET NombreProveedor = ${NombreProveedor},
+    VendedorProveedor = ${VendedorProveedor},
+    ResponsableInscripto = ${ResponsableInscripto},
+    EmailProveedor = ${EmailProveedor},
+    LocalidadProveedor = ${LocalidadProveedor},
+    DireccionProveedor = ${DireccionProveedor}
+    WHERE  IdProveedor = ${IdProveedor}`;
 
-    
-    WHERE IdCliente = ${id} AND StatusCli = 1`;
 
     pool.query(UPDATE, (err, result) => {
 
         if (err) {
             return res.json({
                 ok: false,
-                message: 'ERROR AL ACTUALIZAR PROVEEDOR EN BASE DE DATOS.',
+                message: 'ERROR AL INTENTAR ACTUALIZAR PROVEEDOR.',
                 err
             });
         }
@@ -150,6 +170,7 @@ const ProveedorPut = (req, res = response) => {
         }
 
         res.json({
+            ok: true,
             message: 'PROVEEDOR ACTUALIZADO CON ÉXITO.'
         });
     });
@@ -158,9 +179,9 @@ const ProveedorPut = (req, res = response) => {
 //** Método para la eliminación de un cliente de la base de datos.
 const ProveedorDelete = (req, res = response) => {
 
-    const IdCliente = req.query.IdCliente;
+    const IdProveedor = req.body;
 
-    if (!IdCliente) {
+    if (!IdProveedor) {
 
         return res.json({
             ok: false,
@@ -168,14 +189,14 @@ const ProveedorDelete = (req, res = response) => {
         });
     }
 
-    const DELETE = `UPDATE proveedor SET StatusCli = 0 where IdCliente =${IdCliente}`
+    const DELETE = `DELETE FROM proveedor WHERE IdProveedor = ${IdProveedor}`;
 
     pool.query(DELETE, (err, result) => {
 
         if (err) {
             return res.json({
                 ok: false,
-                message: 'ERROR AL ELIMINAR PROVEEDOR EN BASE DE DATOS.',
+                message: 'ERROR AL ELIMINAR PROVEEDOR.',
                 err
             });
         }
@@ -183,7 +204,7 @@ const ProveedorDelete = (req, res = response) => {
         if (result.length == 0) {
             return res.json({
                 ok: false,
-                message: 'EL PROVEEDOR NO HA ELIMINADO.'
+                message: 'EL PROVEEDOR NO HA SIDO ELIMINADO.'
             });
         }
 
