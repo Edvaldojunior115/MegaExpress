@@ -4,12 +4,9 @@ const pool = require('../database/data');
 
 const LoginUser = (req, res = response) => {
 
-    const { Legajo, contrasena } = req.body;
+    const { Legajo, Contrasena } = req.body;
 
-    // console.log('console log que viene del login: ', Legajo, contrasena);
-
-
-    if (Legajo == undefined || Legajo == '' && contrasena == undefined || contrasena == '') {
+    if (Legajo == undefined || Legajo == '' && Contrasena == undefined || Contrasena == '') {
 
         return res.json({
             ok: 'false',
@@ -20,8 +17,7 @@ const LoginUser = (req, res = response) => {
     }
 
 
-
-    const SELECT = `SELECT * FROM login WHERE legajo = ${Legajo} AND contrasena = ${contrasena}`;
+    const SELECT = `SELECT * FROM login WHERE legajo = ${Legajo} AND contrasena = ${Contrasena}`;
 
     pool.query(SELECT, (err, result) => {
 
@@ -30,7 +26,6 @@ const LoginUser = (req, res = response) => {
             return res.json({
 
                 ok: false,
-                acceso: 0,
                 message: 'ERROR AL INTENTAR LOGUEARSE',
                 err
             });
@@ -40,7 +35,6 @@ const LoginUser = (req, res = response) => {
 
             return res.json({
                 ok: false,
-                acceso: 0,
                 message: 'USUARIO O CONTRASEÑA SON INCORRECTOS'
             });
         }
@@ -58,8 +52,6 @@ const LoginUser = (req, res = response) => {
 
 }
 
-
-
 //Método para crear un login en la base de datos.
 const CrearLogin = (req, res = response) => {
 
@@ -72,7 +64,6 @@ const CrearLogin = (req, res = response) => {
             message: 'LEGAJO Y CONTRASENA SON OBLIGATORIOS PARA EL REGISTRO DEL LOGIN.'
 
         });
-
     }
 
     const INSERT = `INSERT INTO login (id, legajo, contrasena, email, rol)

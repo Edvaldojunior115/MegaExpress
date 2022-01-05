@@ -62,30 +62,3 @@ function register() {
         caja_trasera_login.style.opacity = "1";
     }
 }
-
-
-// // escribir para capturar datos del login.
-
-// // Repasar el video --> youtube.com/watch?v=pDky0NPvzZ8
-
-// function LonginUser() {
-
-//     const formElement = document.getElementById("formLogin");
-
-//     formElement.addEventListener("submit", (Event) => {
-
-//         // let legajo = document.getElementById("legajo");
-//         // let contrasena = document.getElementById("contrasena");
-
-
-//         fetch('http://localhost:8080/api/login', {
-
-//             method: 'get',
-//             body: '${legajo}, ${contrasena}'
-
-//         }).then(result => {
-//             console.log("BIENVENIDO AMIGO");
-//         });
-//     });
-
-// }

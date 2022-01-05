@@ -1,12 +1,8 @@
-const { response, request } = require('express');
+const { response } = require('express');
 const pool = require('../database/data');
 
 
-// IMPORTANTE: Recordar que hay que específicar los atributos para la tabla Proveedor en cada
-// MÉTODO
-
 //Seleccionamos todos los cliente de base de datos
-
 const ProductosGet = (req = request, res = response) => {
 
     const SELECT = 'SELECT * FROM producto';
@@ -41,7 +37,7 @@ const ProductosGet = (req = request, res = response) => {
 
 const ProductoGet = (req = request, res = response) => {
 
-    const IdProducto = req.query.idproducto;
+    const { IdProducto } = req.body;
 
     const SELECT = `SELECT * FROM proveedor where IdProducto= ${IdProducto}`;
 
@@ -75,14 +71,15 @@ const ProductoGet = (req = request, res = response) => {
 }
 
 
-
 //Método para crear un cliente en la base de datos.
-const ProductoPost = (req, res = response) => {
+const AgregarProducto = (req, res = response) => {
 
-    const { NombreProducto, DescripcionProducto, cantidadMinimaStockProducto, PrecioUnitProducto, PorcentajeGananciaProducto } = req.body;
+    const { NombreProducto, DescripcionProducto, CantidadProducto, PrecioUnitProducto, PorcentajeGananciaProducto } = req.body;
 
-    const INSERT = `INSERT INTO producto (IdProducto, NombreProdu, DescripcionProdu, cantidadMinimaStockProdu, PrecioUnitProdu, PorcentajeGananciaProdu)
-    VALUES (NULL, "${NombreProducto}", "${DescripcionProducto}", "${cantidadMinimaStockProducto}", "${PrecioUnitProducto}", "${PorcentajeGananciaProducto}");`;
+    // console.log('AGREGAR PRODUCTO:', NombreProducto);
+
+    const INSERT = `INSERT INTO producto (IdProducto, NombreProdu, DescripcionProdu, CantidadProdu, PrecioUnitProdu, PorcentajeGananciaProdu)
+    VALUES (NULL, "${NombreProducto}", "${DescripcionProducto}", "${CantidadProducto}", "${PrecioUnitProducto}", "${PorcentajeGananciaProducto}");`;
 
     pool.query(INSERT, (err, result) => {
 
@@ -113,12 +110,11 @@ const ProductoPost = (req, res = response) => {
 
 //Método para la actualización de un cliente.
 //Ver método para actualizar solamente los datos nuevos ingresados. 
-
 const ProductoPut = (req, res = response) => {
 
-    const { id, NombreProducto, DescripcionProducto, cantidadMinimaStockProducto, PrecioUnitProducto, PorcentajeGananciaProducto } = req.body;
+    const { idProducto, NombreProducto, DescripcionProducto, CantidadProducto, PrecioUnitProducto, PorcentajeGananciaProducto } = req.body;
 
-    if (id == '' || id == undefined) {
+    if (idProducto == '' || idProducto == undefined) {
 
         return res.json({
             ok: false,
@@ -127,14 +123,12 @@ const ProductoPut = (req, res = response) => {
     }
 
 
-    const UPDATE = `UPDATE proveedor SET
-    
+    const UPDATE = `UPDATE producto SET
     NombreProdu= "${NombreProducto}",
     DescripcionProdu= "${DescripcionProducto}",
-    CantidadMinimaStockProdu= "${cantidadMinimaStockProducto}",
+    CantidadProdu= "${CantidadProducto}",
     PrecioUnitProdu= "${PrecioUnitProducto}",
-    PorcentajeGananciaProdu= "${PorcentajeGananciaProducto}" 
-    WHERE IdProcuto = ${id}`;
+    PorcentajeGananciaProdu= "${PorcentajeGananciaProducto}" WHERE IdProducto = ${idProducto}`;
 
     pool.query(UPDATE, (err, result) => {
 
@@ -162,9 +156,9 @@ const ProductoPut = (req, res = response) => {
 //** Método para la eliminación de un cliente de la base de datos.
 const ProductoDelete = (req, res = response) => {
 
-    const IdProdcuto = req.query.IdCliente;
+    const { idProducto } = req.body;
 
-    if (!IdProdcuto) {
+    if (idProducto == '' || idProducto == undefined) {
 
         return res.json({
             ok: false,
@@ -172,7 +166,7 @@ const ProductoDelete = (req, res = response) => {
         });
     }
 
-    const DELETE = `DELETE FROM producto where IdProducto =${IdProdcuto}`
+    const DELETE = `DELETE FROM producto where IdProducto =${idProducto}`
 
     pool.query(DELETE, (err, result) => {
 
@@ -184,29 +178,19 @@ const ProductoDelete = (req, res = response) => {
             });
         }
 
-        if (result.length == 0) {
-            return res.json({
-                ok: false,
-                message: 'EL PRODUCTO NO HA ELIMINADO.'
-            });
-        }
-
-
-
         return res.json({
             message: 'PRODUCTO ELIMINADO CON ÉXITO.',
-            ID: IdProdcuto
+            ID: idProducto
         });
 
     });
 }
 
 
-
 module.exports = {
     ProductoGet,
     ProductosGet,
-    ProductoPost,
     ProductoPut,
+    AgregarProducto,
     ProductoDelete
 }

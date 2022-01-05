@@ -2,11 +2,7 @@ const { response, request } = require('express');
 const pool = require('../database/data');
 
 
-// IMPORTANTE: Recordar que hay que específicar los atributos para la tabla Proveedor en cada
-// MÉTODO
-
-//Seleccionamos todos los cliente de base de datos
-
+//Seleccionamos todos los RUBROS de base de datos
 const RubrosGet = (req = request, res = response) => {
 
     const SELECT = 'SELECT * FROM rubro';
@@ -41,9 +37,17 @@ const RubrosGet = (req = request, res = response) => {
 
 const RubroGet = (req = request, res = response) => {
 
-    const NombreRubro = req.body;
+    const { IdRubro } = req.body;
 
-    const SELECT = `SELECT * FROM rubro where NombreRubro = ${NombreRubro}`;
+    if (IdRubro == '' || IdRubro == undefined) {
+
+        return res.json({
+            ok: false,
+            message: 'ES NECESARIO ESPECIFICAR EL CÓDIGO DEL RUBRO A CONSULTAR'
+        });
+    }
+
+    const SELECT = `SELECT * FROM rubro where IdRubro = ${IdRubro}`;
 
     pool.query(SELECT, (err, result) => {
 
@@ -74,7 +78,7 @@ const RubroGet = (req = request, res = response) => {
 }
 
 
-//Método para crear un cliente en la base de datos.
+//Método para crear un RUBRO en la base de datos.
 const RubroPost = (req, res = response) => {
 
     const { NombreRubro, Descripcion } = req.body;
@@ -113,9 +117,9 @@ const RubroPost = (req, res = response) => {
 
 const RubroPut = (req, res = response) => {
 
-    const { id, NombreRubro, Descripcion } = req.body;
+    const { IdRubro, NombreRubro, Descripcion } = req.body;
 
-    if (id == '' || id == undefined) {
+    if (IdRubro == '' || IdRubro == undefined) {
 
         return res.json({
             ok: false,
@@ -124,7 +128,7 @@ const RubroPut = (req, res = response) => {
     }
 
 
-    const UPDATE = `UPDATE rubro SET NombreRubro= "${NombreRubro}", DescripcionRubro= "${Descripcion}" WHERE idRubro = ${id}`;
+    const UPDATE = `UPDATE rubro SET NombreRubro= "${NombreRubro}", DescripcionRubro= "${Descripcion}" WHERE IdRubro = ${IdRubro}`;
 
     pool.query(UPDATE, (err, result) => {
 
@@ -153,7 +157,7 @@ const RubroPut = (req, res = response) => {
 //** Método para la eliminación de un cliente de la base de datos.
 const RubroDelete = (req, res = response) => {
 
-    const IdRubro = req.body;
+    const { IdRubro } = req.body;
 
     if (!IdRubro) {
 

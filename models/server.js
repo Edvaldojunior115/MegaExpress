@@ -10,7 +10,7 @@ class Server {
         this.usuariosPath = '/api/usuarios';
         // Middlewares
         this.middlewares();
-        // Rutas de mi aplicación
+        // INICIALIZACIÓN DE LAS RUTAS
         this.routes();
     }
 
@@ -27,12 +27,16 @@ class Server {
 
     }
 
-    //MIS RUTAS
+    //RUTAS DE MI SISTEMA
     routes() {
 
-        this.app.use('/api/usuarios', require('../routes/usuarios'));
+        this.app.use('/api/loginUSER', require('../routes/login'));
+        this.app.use('/api/producto', require('../routes/producto'));
+        this.app.use('/api/proveedor', require('../routes/proveedor'));
+        this.app.use('/api/rubro', require('../routes/rubro'));
         this.app.use('/api/tablas', require('../routes/tablas'));
-        this.app.use('/api/login', require('../routes/login'));
+        this.app.use('/api/usuarios', require('../routes/usuarios'));
+        this.app.use('/api/formaPago', require('../routes/formaPago'));
 
     }
 

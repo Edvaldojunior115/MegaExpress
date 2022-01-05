@@ -8,10 +8,9 @@ const {
 
 const router = Router();
 
-router.get('/', LoginUser);
-router.post('/', CrearLogin);
+router.post('/', LoginUser);
 
-
+router.post('/CrearLogin', CrearLogin);
 
 
 

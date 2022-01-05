@@ -1,22 +1,22 @@
-const formLogin = document.getElementById("ABMusuario");
+const FormUsuario = document.getElementById("ABMusuario");
 
-formLogin.addEventListener('submit', function(e) {
+FormUsuario.addEventListener('submit', function(e) {
 
     e.preventDefault();
-    var Formdatos = new FormData(formLogin);
+    var FormDatosUsuario = new FormData(FormUsuario);
 
     //CAPTURAMOS TODOS LOS DATOS DEL USUARIO INGRESADOS EN EL FORMULARIO
     var DatosUsuario = {
-        Nnombre: Formdatos.get('Nombre'),
-        Apellido: Formdatos.get('Apellido'),
-        DNI: DatosUsuario.get('DNI'),
-        Email: DatosUsuario.get('Email'),
-        Telefono: DatosUsuario.get('Telefono'),
-        Domicilio: DatosUsuario.get('Domicilio'),
-        Localidad: DatosUsuario.get('Localidad'),
-        Fecha: DatosUsuario.get('Fecha'),
-        Cuit: DatosUsuario.get('Cuit'),
-        CTACTE: DatosUsuario.get('CTACTE')
+        Nnombre: FormDatosUsuario.get('Nombre'),
+        Apellido: FormDatosUsuario.get('Apellido'),
+        DNI: FormDatosUsuario.get('DNI'),
+        Email: FormDatosUsuario.get('Email'),
+        Telefono: FormDatosUsuario.get('Telefono'),
+        Domicilio: FormDatosUsuario.get('Domicilio'),
+        Localidad: FormDatosUsuario.get('Localidad'),
+        Fecha: FormDatosUsuario.get('Fecha'),
+        Cuit: FormDatosUsuario.get('Cuit'),
+        CTACTE: FormDatosUsuario.get('CTACTE')
     };
 
     //PASAMOS LA RUTA DE NUESTRO MÉTODO DEL BACKEND CON LA OPERACIÓN A REALIZARSE.

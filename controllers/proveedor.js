@@ -41,7 +41,7 @@ const ProveedoresGet = (req = request, res = response) => {
 
 const ProveedorGet = (req = request, res = response) => {
 
-    const IdProveedor = req.body;
+    const { IdProveedor } = req.body;
 
     const SELECT = `SELECT * FROM proveedor where IdProveedor = ${IdProveedor}`;
 
@@ -143,13 +143,11 @@ const ProveedorPut = (req, res = response) => {
     }
 
 
-    const UPDATE = `UPDATE proveedor SET NombreProveedor = ${NombreProveedor},
-    VendedorProveedor = ${VendedorProveedor},
-    ResponsableInscripto = ${ResponsableInscripto},
-    EmailProveedor = ${EmailProveedor},
-    LocalidadProveedor = ${LocalidadProveedor},
-    DireccionProveedor = ${DireccionProveedor}
-    WHERE  IdProveedor = ${IdProveedor}`;
+    const UPDATE = `UPDATE proveedor SET NombreProveedor = "${NombreProveedor}", VendedorProveedor = "${VendedorProveedor}",
+    ResponsableInscripto = "${ResponsableInscripto}",
+    EmailProveedor = "${EmailProveedor}",
+    LocalidadProveedor = "${LocalidadProveedor}",
+    DireccionProveedor = "${DireccionProveedor}" WHERE  IdProveedor = ${IdProveedor}`;
 
 
     pool.query(UPDATE, (err, result) => {
@@ -171,7 +169,8 @@ const ProveedorPut = (req, res = response) => {
 
         res.json({
             ok: true,
-            message: 'PROVEEDOR ACTUALIZADO CON ÉXITO.'
+            message: 'PROVEEDOR ACTUALIZADO CON ÉXITO.',
+            ID: IdProveedor
         });
     });
 }
@@ -179,7 +178,7 @@ const ProveedorPut = (req, res = response) => {
 //** Método para la eliminación de un cliente de la base de datos.
 const ProveedorDelete = (req, res = response) => {
 
-    const IdProveedor = req.body;
+    const { IdProveedor } = req.body;
 
     if (!IdProveedor) {
 

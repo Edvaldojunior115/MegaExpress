@@ -41,7 +41,7 @@ const FormaPagosGet = (req = request, res = response) => {
 
 const FormaPagoGet = (req = request, res = response) => {
 
-    const IdFormaPAgo = req.query.IdCliente;
+    const { IdFormaPAgo } = req.body;
 
     const SELECT = `SELECT * FROM formapago where IdFormaPago = ${IdFormaPAgo}`;
 
@@ -52,7 +52,7 @@ const FormaPagoGet = (req = request, res = response) => {
             res.json({
 
                 ok: false,
-                message: 'ERROR AL INTENTAR MOSTRAR LAS FORMAS DE PAGOS',
+                message: 'ERROR AL INTENTAR MOSTRAR LA FORMA DE PAGO',
                 err
             });
         }
@@ -60,7 +60,7 @@ const FormaPagoGet = (req = request, res = response) => {
         if (result.length == 0) {
             return res.json({
                 ok: false,
-                message: 'NO HAY FORMA DE PAGO REGISTRADA CON ESE ID.'
+                message: 'NO HAY FORMA DE PAGO REGISTRADA CON ESE CÓDIGO.'
             });
         }
 
@@ -81,7 +81,7 @@ const FormaPagoPost = (req, res = response) => {
 
     const { nombreFormaP, fechaFormaP, descripcionFormaP } = req.body;
 
-    const INSERT = `INSERT INTO proveedor (IdFormaPago, NombreFormaP, FechaFormaP, DescripcionFormaP)
+    const INSERT = `INSERT INTO formapago (IdFormaPago, NombreFormaP, FechaFormaP, DescripcionFormaP)
     VALUES (NULL, "${nombreFormaP}", "${fechaFormaP}", "${descripcionFormaP}");`;
 
     pool.query(INSERT, (err, result) => {
@@ -111,15 +111,15 @@ const FormaPagoPost = (req, res = response) => {
 }
 
 
-//Método para la actualización de un cliente.
+//Método para la actualización de una forma de pago.
 //Ver método para actualizar solamente los datos nuevos ingresados.
 //VER TAMBIÉN EL TEMA DE LAS CLAVES FORRANEAS. 
 
 const FormaPagoPut = (req, res = response) => {
 
-    const { idformapago, nombreFormaP, fechaFormaP, descripcionFormaP } = req.body;
+    const { IdFormaPAgo, nombreFormaP, fechaFormaP, descripcionFormaP } = req.body;
 
-    if (id == '' || id == undefined) {
+    if (IdFormaPAgo == '' || IdFormaPAgo == undefined) {
 
         return res.json({
             ok: false,
@@ -128,11 +128,8 @@ const FormaPagoPut = (req, res = response) => {
     }
 
 
-    const UPDATE = `UPDATE formapago SET
-
-    NombreFormaP= "${nombreFormaP}",
-    FechaFormaP= "${fechaFormaP}",
-    DescripcionFormaP= "${descripcionFormaP}" WHERE IdFormaPago = ${idformapago}`;
+    const UPDATE = `UPDATE formapago SET NombreFormaP= "${nombreFormaP}", FechaFormaP= "${fechaFormaP}",
+    DescripcionFormaP= "${descripcionFormaP}" WHERE IdFormaPago = ${IdFormaPAgo}`;
 
     pool.query(UPDATE, (err, result) => {
 
@@ -152,7 +149,9 @@ const FormaPagoPut = (req, res = response) => {
         }
 
         res.json({
-            message: 'FORMA DE PAGO ACTUALIZADA CON ÉXITO.'
+            ok: true,
+            message: 'FORMA DE PAGO ACTUALIZADA CON ÉXITO.',
+            ID: IdFormaPAgo
         });
     });
 }
@@ -160,9 +159,9 @@ const FormaPagoPut = (req, res = response) => {
 //** Método para la eliminación de un cliente de la base de datos.
 const FormaPagoDelete = (req, res = response) => {
 
-    const idformapago = req.query.Idformapago;
+    const { IdFormaPAgo } = req.body;
 
-    if (!idformapago) {
+    if (IdFormaPAgo == '' || IdFormaPAgo == undefined) {
 
         return res.json({
             ok: false,
@@ -170,7 +169,7 @@ const FormaPagoDelete = (req, res = response) => {
         });
     }
 
-    const DELETE = `DELETE FROM formapago where IdFormaPago = ${idformapago}`
+    const DELETE = `DELETE FROM formapago where IdFormaPago = ${IdFormaPAgo}`
 
     pool.query(DELETE, (err, result) => {
 
@@ -185,7 +184,8 @@ const FormaPagoDelete = (req, res = response) => {
         if (result.length == 0) {
             return res.json({
                 ok: false,
-                message: 'LA FORMA DE PAGO NO HA ELIMINADA.'
+                message: 'LA FORMA DE PAGO NO HA ELIMINADA.',
+
             });
         }
 
@@ -193,7 +193,7 @@ const FormaPagoDelete = (req, res = response) => {
 
         return res.json({
             message: 'FORMA DE PAGO ELIMINADA CON ÉXITO.',
-            ID: idformapago
+            ID: IdFormaPAgo
         });
 
     });

@@ -3,60 +3,45 @@
 
 <head>
 
-    <link rel="stylesheet" href="../assets/css/abmStyles.css">
+
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro del Producto</title>
+
+    <link rel="stylesheet" href="../assets/css/abmStyles.css">
 
 </head>
 
 <body>
 
     <div class="container">
-        <form id="contact" action="" method="post">
+
+
+        <form id="FormProducto">
+
             <h3>Registrar Producto</h3>
             <h4>Ingresar Producto a ser dado de alta al Stock:</h4>
 
-            <fieldset>
-                <input placeholder="Nombre" type="text" tabindex="1" required autofocus>
-            </fieldset>
-
-            <fieldset>
-                <input placeholder="Cantidad" type="text" tabindex="3" required autofocus>
-            </fieldset>
-
-            <fieldset>
-                <input placeholder="Precio Unitario" type="text" tabindex="3" required>
-            </fieldset>
-
-            <fieldset>
-                <input placeholder="Porcentaje de ganancia" type="text" tabindex="4" required>
-            </fieldset>
-
-            <fieldset>
-                <textarea placeholder="Descripción" tabindex="2" required></textarea>
-            </fieldset>
+            <input name="Nombre" placeholder="Nombre" type="text" required autofocus>
+            <input name="Cantidad" placeholder="Cantidad" type="text" required autofocus>
+            <input name="PrecioUnitario" placeholder="Precio Unitario" type="text" required>
+            <input name="PorcentajeGanancia" placeholder="Porcentaje de ganancia" type="text" required>
+            <textarea name="Descripcion" placeholder="Descripción" type="text" required></textarea>
 
 
+            <button type="submit" id="AltaProducto">Registrar</button>
 
-            <!-- <fieldset>
-            <textarea placeholder="Descripción" tabindex="5" required></textarea>
-          </fieldset> -->
+            <button type="submit" id="EliminarProducto">Eliminar</button>
 
-            <fieldset>
-                <button name="btRegistrarProducto" type="submit" id="AltaProducto-submit" data-submit="...Sending">Registrar</button>
-            </fieldset>
-            <fieldset>
-                <button name="btEliminarProducto" type="submit" id="EliminarProducto-submit" data-submit="...Sending">Eliminar</button>
-            </fieldset>
-            <fieldset>
-                <button name="btActualizarProducto" type="submit" id="ActualizarProducto-submit" data-submit="...Sending">Actualizar</button>
-            </fieldset>
+            <button type="submit" id="ActualizarProducto">Actualizar</button>
+
         </form>
 
-
     </div>
+
+
+    <script src="../assets/js/abmProducto.js"></script>
 
 </body>
 

@@ -1,11 +1,19 @@
+//SELECCIONAMOS EL FORMULARIO PARA LUEGO TOMAR UNA ACCIÓN SOBRE ÉSTE.
+//EN ESTE CASO, LO SELECCIONAMOS A TRAVÉS DE UN ID PARA CAPTURAR LOS DATOS INGRESADOS EN ÉL.
 const formLogin = document.getElementById("SesionLoginForm");
 const formRegistro = document.getElementById("registrarLogin");
 
 
-//LOGIN DEL USUARIO
-formLogin.addEventListener('submit', function(e) {
+////CAPTURAMOS EL EVENTO CLICK CUANDO EL USAURIO CLIQUEA EN EL BOTON DEL FORMULARIO.
+const Login = document.getElementById("btnLogin");
+const AltaLogin = document.getElementById("btnRegistra");
 
-    e.preventDefault();
+
+
+//ACTIVAMOS LA FUNCIÓN AL REALIZAR EL CLICK Y DECIDIMOS QUE SE HACE UNA VEZ QUE HAYA CLIQUEADO.
+Login.onclick = function(event) {
+
+    event.preventDefault();
     var Formdatos = new FormData(formLogin);
 
     // console.log(Formdatos.get('legajo'));
@@ -14,11 +22,11 @@ formLogin.addEventListener('submit', function(e) {
 
     var login = {
         Legajo: Formdatos.get('legajo'),
-        contrasena: Formdatos.get('contrasena')
+        Contrasena: Formdatos.get('contrasena')
     };
 
-    fetch('http://localhost:8080/api/login', {
-        method: 'GET',
+    fetch('http://localhost:8080/api/loginUSER', {
+        method: 'POST',
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
@@ -62,52 +70,48 @@ formLogin.addEventListener('submit', function(e) {
                     if (result.dismiss === Swal.DismissReason.timer) {
 
                         Swal.fire({
+                            title: data.message,
                             icon: 'success',
                             showConfirmButton: false,
                             timer: 2300
                         });
-                        // location.href = "./view/principal.html";
+                        location.href = "./view/principal.html";
                     }
                 })
 
 
             }
 
-        }).catch(err => console.log(err.err));
+        }).catch(err => console.log(err));
 
-});
+}
 
-
+//FALTA TERMINA EL DE REGISTRO DEL USUARIO Y LUEGO PROBAR.
 //REGISTRAR UN USUARIO
-formRegistro.addEventListener('submit', function(e) {
+AltaLogin.onclick = function(event) {
 
-    e.preventDefault();
+    event.preventDefault();
     var FormRegistroDatos = new FormData(formRegistro);
 
-    // console.log(Formdatos.get('legajo'));
-    // console.log(Formdatos.get('contrasena'));
-    // console.log(JSON.stringify(Formdatos));
-
-    var DatosRegistrar = {
-        Legajo: formRegistro.get('Legajo'),
-        Contrasena: formRegistro.get('Contrasena'),
-        Email: formRegistro.get('Email'),
-        Rol: formRegistro.get('Rol')
+    var DatosLoginRegistrar = {
+        Legajo: FormRegistroDatos.get('Legajo'),
+        Contrasena: FormRegistroDatos.get('Contrasena'),
+        Email: FormRegistroDatos.get('Email'),
+        Rol: FormRegistroDatos.get('Rol')
     };
 
-    fetch('http://localhost:8080/api/login', {
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(DatosRegistrar)
-    })
-
-    .then(response => response.json())
+    fetch('http://localhost:8080/api/loginUSER/CrearLogin', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(DatosLoginRegistrar)
+        })
+        .then(response => response.json())
         .then(data => {
 
-            if (data.acceso == 0) {
+            if (data.acceso == false) {
 
                 Swal.fire({
                     icon: 'error',
@@ -140,17 +144,15 @@ formRegistro.addEventListener('submit', function(e) {
                     if (result.dismiss === Swal.DismissReason.timer) {
 
                         Swal.fire({
+                            title: data.message,
                             icon: 'success',
                             showConfirmButton: false,
                             timer: 2300
                         });
-                        // location.href = "./view/principal.html";
                     }
                 })
 
-
             }
+        }).catch(err => console.log(err));
 
-        }).catch(err => console.log(err.err));
-
-});
+}
